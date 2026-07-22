@@ -25,8 +25,26 @@ jobs:
         uses: actions/checkout@v6
       - name: Extract Cocos web build
         run: |
-          mkdir -p _site
-          unzip -q BOX_POP-web-mobile.zip -d _site || true
+          python <<'PY'
+          import shutil
+          import zipfile
+          from pathlib import Path
+
+          site = Path("_site")
+          shutil.rmtree(site, ignore_errors=True)
+          site.mkdir(parents=True, exist_ok=True)
+          with zipfile.ZipFile("BOX_POP-web-mobile.zip") as archive:
+              for entry in archive.infolist():
+                  name = entry.filename.replace(chr(92), "/").lstrip("/")
+                  if not name or ".." in Path(name).parts:
+                      continue
+                  target = site / name
+                  if name.endswith("/"):
+                      target.mkdir(parents=True, exist_ok=True)
+                  else:
+                      target.parent.mkdir(parents=True, exist_ok=True)
+                      target.write_bytes(archive.read(entry))
+          PY
           test -f _site/index.html
       - name: Setup Pages
         uses: actions/configure-pages@v5
