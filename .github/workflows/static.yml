@@ -26,7 +26,8 @@ jobs:
       - name: Extract Cocos web build
         run: |
           mkdir -p _site
-          unzip -q BOX_POP-web-mobile.zip -d _site
+          unzip -q BOX_POP-web-mobile.zip -d _site || true
+          test -f _site/index.html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
@@ -36,3 +37,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
