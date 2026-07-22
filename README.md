@@ -1,2 +1,5 @@
 # box-pop-demo
-BOX POP 盲盒异想消｜Cocos Creator 3D 物理消除手机试玩版
+
+BOX POP《盲盒异想消》｜Cocos Creator 3D 物理点消手机试玩版。
+
+本版本包含乳白漫射背光舱、四角暖白玻璃灯、轻量接触阴影、点击连锁边缘高亮，以及六面动态表面的功能盲盒。
